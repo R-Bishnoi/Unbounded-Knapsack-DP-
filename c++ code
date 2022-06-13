@@ -1,0 +1,37 @@
+// same as coin change problem 
+// infinite supply of wt 
+
+// memoization
+
+class Solution{
+public:
+
+int solve(int wt[], int val[], vector<vector<int>>&dp,int t,int i){
+  
+  //if(t==0)return INT_MIN;  
+  if(i==0){
+      if(t>=wt[0])return t/wt[0]*val[0];
+      else return 0;
+  }  
+ 
+ 
+ if(dp[i][t]!=-1)return dp[i][t];
+ 
+ int not_take=solve(wt,val,dp,t,i-1);
+ 
+ int take=INT_MIN;
+ if(t>=wt[i])take=val[i]+solve(wt,val,dp,t-wt[i],i);
+    
+ return dp[i][t]=max(take,not_take);   
+    
+}
+
+
+int knapSack(int n, int t, int val[], int wt[]){
+     
+     vector<vector<int>>dp(n,vector<int>(t+1,-1));
+     
+     return solve(wt,val,dp,t,n-1);
+     
+    }   
+};
